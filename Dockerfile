@@ -1,6 +1,7 @@
 # Build with docker build -t flask .
 FROM ubuntu:xenial
 
+# Update and install
 RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
@@ -8,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     uwsgi \
     nginx \
     supervisor
+RUN pip3 install --upgrade pip
 
 # Forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
