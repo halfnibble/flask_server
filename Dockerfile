@@ -28,13 +28,20 @@ RUN ln -s /etc/nginx/sites-available/nginx.conf /etc/nginx/sites-enabled/
 # Copy the base uWSGI ini file to enable default dynamic uwsgi process number
 COPY uwsgi.ini /etc/uwsgi/
 
-# Custom Supervisord config
+# Custom Supervisord config & run alias
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Copy over app
+# Copy setup and run scripts into $PATH
+COPY scripts/setup /usr/bin/setup
+COPY scripts/startup /usr/bin/startup
+COPY scripts/debug /usr/bin/debug
+RUN chmod u+x /usr/bin/setup
+RUN chmod u+x /usr/bin/startup
+RUN chmod u+x /usr/bin/debug
+
+# Must mount application dir as /app
 WORKDIR /app
 
 EXPOSE 80
 
-CMD pip3 install -r /app/requirements.txt && \
-    /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+CMD setup && startup

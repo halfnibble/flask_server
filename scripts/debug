@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo '#########################'
+echo '# Running in debug mode #'
+echo '#########################'
+
+python3 /app/main.py

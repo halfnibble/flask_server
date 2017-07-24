@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t flask_server .
+docker build -t nostalgio/flask_server .
